@@ -1,0 +1,198 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Prata', ui-serif, Georgia, serif;
+    --color-ivory: #f7f2ea;
+    --color-latte: #eadcc6;
+    --color-umber: #5b4635;
+    --color-clay: #b66d4b;
+    --color-forest: #2e4a3b;
+    --color-ink: #181611;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background:
+            radial-gradient(circle at top left, rgba(234, 220, 198, 0.8), transparent 38%),
+            radial-gradient(circle at right 20%, rgba(182, 109, 75, 0.12), transparent 24%),
+            linear-gradient(180deg, #fbf8f2 0%, #f5efe6 100%);
+        color: var(--color-ink);
+    }
+
+    ::selection {
+        background: color-mix(in srgb, var(--color-clay) 30%, white);
+    }
+
+    img {
+        image-rendering: auto;
+    }
+}
+
+@layer components {
+    .section-shell {
+        @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+    }
+
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[color:var(--color-forest)];
+    }
+
+    .display-title {
+        font-family: var(--font-display);
+        letter-spacing: 0;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-3 rounded-full border border-transparent bg-[color:var(--color-ink)] px-6 py-3 text-sm font-semibold text-[color:var(--color-ivory)] transition duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--color-forest)];
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-3 rounded-full border border-[color:var(--color-umber)]/20 bg-white/65 px-6 py-3 text-sm font-semibold text-[color:var(--color-ink)] backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:border-[color:var(--color-umber)]/45 hover:bg-white;
+    }
+
+    .pill-link {
+        @apply inline-flex items-center rounded-full border border-[color:var(--color-umber)]/15 px-4 py-2 text-sm font-medium text-[color:var(--color-umber)] transition duration-300 hover:border-[color:var(--color-clay)] hover:text-[color:var(--color-ink)];
+    }
+
+    .pill-link.is-active {
+        @apply border-transparent bg-[color:var(--color-ink)] text-[color:var(--color-ivory)];
+    }
+
+    .surface-panel {
+        @apply rounded-[2rem] border border-white/70 bg-white/70 shadow-[0_30px_80px_rgba(24,22,17,0.08)] backdrop-blur-md;
+    }
+
+    .product-card {
+        @apply relative overflow-hidden rounded-[2rem] border border-white/80 bg-white/80 p-4 shadow-[0_24px_70px_rgba(24,22,17,0.08)] backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:shadow-[0_34px_90px_rgba(24,22,17,0.14)];
+    }
+
+    .product-card-image {
+        @apply aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-[color:var(--color-latte)]/40;
+    }
+
+    .product-card-image img {
+        @apply h-full w-full object-cover transition duration-700 group-hover:scale-105;
+    }
+
+    .grain-overlay {
+        background-image:
+            linear-gradient(transparent, rgba(255, 255, 255, 0.03)),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='%23000000' fill-opacity='.03'%3E%3Ccircle cx='12' cy='12' r='1'/%3E%3Ccircle cx='72' cy='44' r='1'/%3E%3Ccircle cx='128' cy='88' r='1'/%3E%3Ccircle cx='168' cy='52' r='1'/%3E%3Ccircle cx='30' cy='118' r='1'/%3E%3Ccircle cx='84' cy='146' r='1'/%3E%3Ccircle cx='148' cy='156' r='1'/%3E%3C/g%3E%3C/svg%3E");
+        mix-blend-mode: multiply;
+        opacity: 0.85;
+    }
+
+    .section-heading {
+        @apply max-w-2xl text-balance text-4xl leading-tight sm:text-5xl;
+        font-family: var(--font-display);
+        letter-spacing: 0;
+    }
+
+    .stat-number {
+        font-family: var(--font-display);
+        @apply text-4xl sm:text-5xl;
+    }
+
+    .nav-link {
+        @apply text-sm font-semibold text-[color:var(--color-umber)] transition duration-300 hover:text-[color:var(--color-ink)];
+    }
+
+    .nav-utility-chip {
+        @apply inline-flex max-w-40 items-center rounded-full bg-[color:var(--color-latte)] px-3 py-2 text-sm font-semibold text-[color:var(--color-ink)];
+    }
+
+    .product-badge {
+        @apply inline-flex max-w-full items-center rounded-full bg-[color:var(--color-latte)] px-3 py-1.5 text-center text-xs font-semibold leading-5 text-[color:var(--color-ink)];
+    }
+
+    .auth-card {
+        @apply mx-auto w-full max-w-xl rounded-[2rem] border border-white/75 bg-white/78 p-8 shadow-[0_30px_80px_rgba(24,22,17,0.08)] backdrop-blur-md sm:p-10;
+    }
+
+    .input-shell {
+        @apply rounded-full border border-[color:var(--color-umber)]/15 bg-white/85 px-4 py-3 text-sm text-[color:var(--color-ink)] outline-none transition focus:border-[color:var(--color-clay)] focus:ring-2 focus:ring-[color:var(--color-clay)]/20;
+    }
+
+    .textarea-shell {
+        @apply min-h-32 rounded-[1.5rem] border border-[color:var(--color-umber)]/15 bg-white/85 px-4 py-3 text-sm leading-6 text-[color:var(--color-ink)] outline-none transition focus:border-[color:var(--color-clay)] focus:ring-2 focus:ring-[color:var(--color-clay)]/20;
+    }
+
+    .quantity-input {
+        @apply w-20 rounded-full border border-[color:var(--color-umber)]/15 bg-white px-4 py-2 text-center text-sm font-semibold outline-none transition focus:border-[color:var(--color-clay)] focus:ring-2 focus:ring-[color:var(--color-clay)]/20;
+    }
+
+    .label-text {
+        @apply mb-2 block text-sm font-semibold text-[color:var(--color-ink)];
+    }
+
+    .label-note {
+        @apply mt-2 text-xs leading-5 text-[color:var(--color-umber)];
+    }
+
+    .admin-stat {
+        @apply rounded-[1.75rem] border border-white/80 bg-white/82 p-6 shadow-[0_18px_50px_rgba(24,22,17,0.08)] backdrop-blur-md;
+    }
+
+    .admin-kpi-value {
+        font-family: var(--font-display);
+        @apply mt-4 text-4xl leading-none;
+    }
+
+    .admin-soft-chip {
+        @apply inline-flex items-center rounded-full border border-[color:var(--color-umber)]/15 bg-[color:var(--color-ivory)] px-3 py-1.5 text-xs font-semibold text-[color:var(--color-umber)];
+    }
+
+    .admin-table-row {
+        @apply border-t border-black/5 px-4 py-5 first:border-t-0 sm:px-5;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .bg-ink {
+        background-color: var(--color-ink);
+    }
+
+    .text-ink {
+        color: var(--color-ink);
+    }
+
+    .text-umber {
+        color: var(--color-umber);
+    }
+
+    .text-forest {
+        color: var(--color-forest);
+    }
+
+    .bg-ivory {
+        background-color: var(--color-ivory);
+    }
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+            opacity 700ms ease,
+            transform 700ms ease;
+    }
+
+    .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
