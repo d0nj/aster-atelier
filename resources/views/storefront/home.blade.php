@@ -175,26 +175,31 @@
             <div class="grid gap-6 lg:grid-cols-2">
                 @foreach ($featured->take(2) as $product)
                     <article data-reveal class="surface-panel overflow-hidden">
-                        <div class="grid gap-6 p-4 sm:p-5 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                        <div class="grid h-full gap-6 p-4 sm:p-5 lg:grid-cols-[0.95fr_1.05fr]">
                             <a href="{{ route('products.show', $product) }}" class="overflow-hidden rounded-[2rem]">
                                 <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy" class="h-full min-h-[22rem] w-full object-cover">
                             </a>
-                            <div class="p-3 sm:p-4">
+                            <div class="flex flex-col p-3 sm:p-4">
                                 <p class="eyebrow">{{ $product->category }}</p>
                                 <h3 class="mt-3 text-4xl leading-tight display-title">{{ $product->name }}</h3>
-                                <p class="mt-4 text-sm leading-7 text-[color:var(--color-umber)]">{{ $product->description }}</p>
-                                <div class="mt-6 flex items-center gap-4">
-                                    <span class="text-2xl font-semibold text-[color:var(--color-ink)]">{{ $product->formatted_price }}</span>
-                                    @if ($product->formatted_compare_price)
-                                        <span class="text-sm text-[color:var(--color-umber)] line-through">{{ $product->formatted_compare_price }}</span>
-                                    @endif
-                                </div>
-                                <div class="mt-8 flex flex-wrap gap-3">
-                                    <a href="{{ route('products.show', $product) }}" class="btn-primary">Xem chi tiết</a>
-                                    <form action="{{ route('cart.store', $product) }}" method="POST" data-add-to-cart>
-                                        @csrf
-                                        <button type="submit" class="btn-secondary">Thêm vào giỏ</button>
-                                    </form>
+                                <p class="mt-4 line-clamp-3 text-sm leading-7 text-[color:var(--color-umber)]">{{ $product->description }}</p>
+                                <div class="mt-auto pt-6">
+                                    <div class="flex flex-wrap items-center gap-4">
+                                        <span class="text-2xl font-semibold text-[color:var(--color-ink)]">{{ $product->formatted_price }}</span>
+                                        @if ($product->formatted_compare_price)
+                                            <span class="text-sm text-[color:var(--color-umber)] line-through">{{ $product->formatted_compare_price }}</span>
+                                        @endif
+                                        @if ($product->discount_percent)
+                                            <span class="rounded-full bg-[color:var(--color-clay)] px-3 py-1.5 text-xs font-semibold text-[color:var(--color-ivory)]">-{{ $product->discount_percent }}%</span>
+                                        @endif
+                                    </div>
+                                    <div class="mt-6 flex flex-wrap gap-3">
+                                        <a href="{{ route('products.show', $product) }}" class="btn-primary">Xem chi tiết</a>
+                                        <form action="{{ route('cart.store', $product) }}" method="POST" data-add-to-cart>
+                                            @csrf
+                                            <button type="submit" class="btn-secondary">Thêm vào giỏ</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

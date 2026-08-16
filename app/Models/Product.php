@@ -62,6 +62,17 @@ class Product extends Model
         return Money::format($this->compare_price);
     }
 
+    public function getDiscountPercentAttribute(): ?int
+    {
+        if ($this->compare_price === null || (float) $this->compare_price <= 0) {
+            return null;
+        }
+
+        $percent = (1 - ((float) $this->price / (float) $this->compare_price)) * 100;
+
+        return max(0, (int) round($percent));
+    }
+
     /**
      * @return Collection<int, string>
      */
