@@ -28,6 +28,23 @@ class CartTest extends TestCase
         $this->assertSame($product->id, $snapshot->lines->first()->product->id);
     }
 
+    public function test_product_can_be_added_to_cart_via_json(): void
+    {
+        $this->seed();
+
+        $product = Product::query()->where('slug', 'tidal-pour-over-set')->firstOrFail();
+
+        $response = $this->postJson(route('cart.store', $product), ['quantity' => 2]);
+
+        $response->assertOk()
+            ->assertJson([
+                'count' => 2,
+                'message' => "Đã thêm {$product->name} vào giỏ hàng.",
+            ]);
+
+        $this->assertSame(2, $this->app->make(CartStore::class)->snapshot()->count());
+    }
+
     public function test_cart_item_quantity_can_be_updated(): void
     {
         $this->seed();

@@ -47,7 +47,7 @@
                                     <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
                                 </svg>
                                 <span class="hidden sm:inline">Giỏ hàng</span>
-                                <span class="rounded-full bg-[color:var(--color-ink)] px-2 py-0.5 text-xs font-bold text-[color:var(--color-ivory)]">{{ $cartCount ?? 0 }}</span>
+                                <span data-cart-count class="rounded-full bg-[color:var(--color-ink)] px-2 py-0.5 text-xs font-bold text-[color:var(--color-ivory)]">{{ $cartCount ?? 0 }}</span>
                             </a>
 
                             <div class="hidden lg:flex items-center gap-4">
@@ -135,6 +135,18 @@
         <main class="relative z-10 pt-24 lg:pt-28">
             @yield('content')
         </main>
+
+        <div
+            data-cart-toast
+            class="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4 opacity-0 transition duration-300"
+            role="status"
+            aria-live="polite"
+        >
+            <div class="pointer-events-auto flex items-center gap-4 rounded-full border border-white/60 bg-white/90 px-5 py-3 text-sm text-[color:var(--color-ink)] shadow-[0_16px_45px_rgba(24,22,17,0.16)] backdrop-blur-md">
+                <span data-cart-toast-message></span>
+                <a href="{{ route('cart.index') }}" class="font-semibold text-[color:var(--color-clay)]">Xem giỏ hàng</a>
+            </div>
+        </div>
 
         <footer class="relative z-10 mt-24 border-t border-black/5 py-10">
             <div class="section-shell grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">

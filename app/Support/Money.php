@@ -13,6 +13,6 @@ class Money
             return '';
         }
 
-        return number_format((float) $amount, 0, ',', '.').' ₫';
+        return number_format((float) $amount, 0, ',', '.')."\u{00A0}₫";
     }
 }

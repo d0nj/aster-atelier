@@ -119,7 +119,7 @@
                                 <p class="text-lg font-semibold text-[color:var(--color-ink)]">{{ $product->formatted_price }}</p>
                                 <p class="text-sm text-[color:var(--color-umber)]">{{ number_format((float) $product->rating, 1, ',', '.') }}/5 từ {{ $product->reviews_count }} đánh giá</p>
                             </div>
-                            <form action="{{ route('cart.store', $product) }}" method="POST">
+                            <form action="{{ route('cart.store', $product) }}" method="POST" data-add-to-cart>
                                 @csrf
                                 <button type="submit" class="btn-secondary px-5 py-2.5">Thêm vào giỏ</button>
                             </form>
@@ -191,7 +191,7 @@
                                 </div>
                                 <div class="mt-8 flex flex-wrap gap-3">
                                     <a href="{{ route('products.show', $product) }}" class="btn-primary">Xem chi tiết</a>
-                                    <form action="{{ route('cart.store', $product) }}" method="POST">
+                                    <form action="{{ route('cart.store', $product) }}" method="POST" data-add-to-cart>
                                         @csrf
                                         <button type="submit" class="btn-secondary">Thêm vào giỏ</button>
                                     </form>

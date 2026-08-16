@@ -85,7 +85,7 @@
                         </div>
                         <div class="flex gap-2">
                             <a href="{{ route('products.show', $product) }}" class="btn-secondary px-4 py-2.5">Xem</a>
-                            <form action="{{ route('cart.store', $product) }}" method="POST">
+                            <form action="{{ route('cart.store', $product) }}" method="POST" data-add-to-cart>
                                 @csrf
                                 <button type="submit" class="btn-primary px-4 py-2.5">Thêm</button>
                             </form>

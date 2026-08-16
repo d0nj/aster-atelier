@@ -32,7 +32,7 @@
                     <span>{{ $product->reviews_count }} đánh giá xác thực</span>
                 </div>
 
-                <form action="{{ route('cart.store', $product) }}" method="POST" class="surface-panel mt-8 p-6">
+                <form action="{{ route('cart.store', $product) }}" method="POST" class="surface-panel mt-8 p-6" data-add-to-cart>
                     @csrf
                     <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
                         <div>

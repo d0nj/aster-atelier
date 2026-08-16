@@ -4,18 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Orders\CartStore;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function store(Request $request, Product $product, CartStore $cart): RedirectResponse
+    public function store(Request $request, Product $product, CartStore $cart): RedirectResponse|JsonResponse
     {
         $validated = $request->validate([
             'quantity' => ['nullable', 'integer', 'min:1', 'max:8'],
         ]);
 
         $cart->add($product, $validated['quantity'] ?? 1);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'count' => $cart->snapshot()->count(),
+                'message' => "Đã thêm {$product->name} vào giỏ hàng.",
+            ]);
+        }
 
         return redirect()
             ->back()

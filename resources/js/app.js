@@ -53,4 +53,67 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    const cartCountBadges = document.querySelectorAll('[data-cart-count]');
+    const cartToast = document.querySelector('[data-cart-toast]');
+    const cartToastMessage = cartToast?.querySelector('[data-cart-toast-message]');
+    let cartToastTimer = null;
+
+    const showCartToast = (message) => {
+        if (!cartToast || !cartToastMessage) {
+            return;
+        }
+
+        cartToastMessage.textContent = message;
+        cartToast.classList.remove('opacity-0');
+
+        clearTimeout(cartToastTimer);
+
+        cartToastTimer = setTimeout(() => {
+            cartToast.classList.add('opacity-0');
+        }, 2600);
+    };
+
+    document.querySelectorAll('form[data-add-to-cart]').forEach((form) => {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const button = form.querySelector('button[type="submit"]');
+            const originalLabel = button ? button.textContent : '';
+
+            if (button) {
+                button.disabled = true;
+                button.textContent = 'Đang thêm…';
+            }
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { Accept: 'application/json' },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const payload = await response.json();
+
+                cartCountBadges.forEach((badge) => {
+                    badge.textContent = String(payload.count);
+                });
+
+                showCartToast(payload.message);
+            } catch (error) {
+                // Network or server failure: fall back to a normal form submit.
+                form.submit();
+                return;
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = originalLabel;
+                }
+            }
+        });
+    });
 });
