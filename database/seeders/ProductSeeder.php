@@ -29,10 +29,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.9,
                 'reviews_count' => 38,
                 'badge' => 'Bán chạy',
-                'image_url' => '/storage/products/solstice-floor-lamp_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/solstice-floor-lamp_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/solstice-floor-lamp_0.jpg',
-                    '/storage/products/solstice-floor-lamp_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/solstice-floor-lamp_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/solstice-floor-lamp_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Đế đá nặng cho cảm giác đứng vững và chắc tay',
@@ -60,10 +60,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.8,
                 'reviews_count' => 24,
                 'badge' => 'Studio chọn',
-                'image_url' => '/storage/products/vale-boucle-lounge-chair_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/vale-boucle-lounge-chair_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/vale-boucle-lounge-chair_0.jpg',
-                    '/storage/products/vale-boucle-lounge-chair_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/vale-boucle-lounge-chair_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/vale-boucle-lounge-chair_0.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Vải bouclé bền cho sử dụng hằng ngày',
@@ -91,10 +91,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.9,
                 'reviews_count' => 67,
                 'badge' => 'Mới',
-                'image_url' => '/storage/products/tidal-pour-over-set_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/tidal-pour-over-set_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/tidal-pour-over-set_0.jpg',
-                    '/storage/products/tidal-pour-over-set_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/tidal-pour-over-set_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/tidal-pour-over-set_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Stoneware hoàn thiện thủ công với độ loang men nhẹ',
@@ -122,10 +122,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.7,
                 'reviews_count' => 44,
                 'badge' => null,
-                'image_url' => '/storage/products/dune-linen-throw_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/dune-linen-throw_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/dune-linen-throw_0.jpg',
-                    '/storage/products/dune-linen-throw_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/dune-linen-throw_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/dune-linen-throw_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Lanh châu Âu đã garment-wash',
@@ -153,10 +153,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.8,
                 'reviews_count' => 19,
                 'badge' => 'Giới hạn',
-                'image_url' => '/storage/products/halo-travertine-side-table_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/halo-travertine-side-table_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/halo-travertine-side-table_0.jpg',
-                    '/storage/products/halo-travertine-side-table_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/halo-travertine-side-table_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/halo-travertine-side-table_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Mặt đá travertine honed',
@@ -184,10 +184,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.8,
                 'reviews_count' => 83,
                 'badge' => 'Vừa về',
-                'image_url' => '/storage/products/ember-reed-diffuser_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ember-reed-diffuser_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/ember-reed-diffuser_0.jpg',
-                    '/storage/products/ember-reed-diffuser_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ember-reed-diffuser_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ember-reed-diffuser_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Nền khuếch tán không cồn',
@@ -215,10 +215,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.6,
                 'reviews_count' => 31,
                 'badge' => null,
-                'image_url' => '/storage/products/meridian-storage-basket_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/meridian-storage-basket_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/meridian-storage-basket_0.jpg',
-                    '/storage/products/meridian-storage-basket_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/meridian-storage-basket_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/meridian-storage-basket_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Thân giỏ đan bằng cói sông',
@@ -246,10 +246,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.9,
                 'reviews_count' => 52,
                 'badge' => 'Quà tặng yêu thích',
-                'image_url' => '/storage/products/aster-stoneware-bowl-set_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/aster-stoneware-bowl-set_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/aster-stoneware-bowl-set_0.jpg',
-                    '/storage/products/aster-stoneware-bowl-set_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/aster-stoneware-bowl-set_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/aster-stoneware-bowl-set_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Set 4 bát xếp chồng gọn',
@@ -277,10 +277,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.7,
                 'reviews_count' => 29,
                 'badge' => 'Bán chạy',
-                'image_url' => '/storage/products/arc-wall-sconce_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/arc-wall-sconce_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/arc-wall-sconce_0.jpg',
-                    '/storage/products/arc-wall-sconce_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/arc-wall-sconce_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/arc-wall-sconce_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Thép đen mờ hoàn thiện',
@@ -308,10 +308,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.6,
                 'reviews_count' => 37,
                 'badge' => null,
-                'image_url' => '/storage/products/velvet-throw-pillow_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/velvet-throw-pillow_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/velvet-throw-pillow_0.jpg',
-                    '/storage/products/velvet-throw-pillow_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/velvet-throw-pillow_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/velvet-throw-pillow_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Nhung 100% polyester',
@@ -339,10 +339,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.8,
                 'reviews_count' => 42,
                 'badge' => 'Studio chọn',
-                'image_url' => '/storage/products/ceramic-vase-set_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ceramic-vase-set_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/ceramic-vase-set_0.jpg',
-                    '/storage/products/ceramic-vase-set_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ceramic-vase-set_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ceramic-vase-set_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Set 3 bình kích thước khác nhau',
@@ -370,10 +370,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.5,
                 'reviews_count' => 28,
                 'badge' => null,
-                'image_url' => '/storage/products/wooden-serving-tray_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/wooden-serving-tray_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/wooden-serving-tray_0.jpg',
-                    '/storage/products/wooden-serving-tray_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/wooden-serving-tray_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/wooden-serving-tray_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Gỗ sồi tự nhiên',
@@ -401,10 +401,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.9,
                 'reviews_count' => 95,
                 'badge' => 'Bán chạy',
-                'image_url' => '/storage/products/lavender-candle_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/lavender-candle_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/lavender-candle_0.jpg',
-                    '/storage/products/lavender-candle_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/lavender-candle_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/lavender-candle_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Sáp đậu nành 100% tự nhiên',
@@ -432,10 +432,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.6,
                 'reviews_count' => 33,
                 'badge' => null,
-                'image_url' => '/storage/products/linen-table-runner_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/linen-table-runner_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/linen-table-runner_0.jpg',
-                    '/storage/products/linen-table-runner_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/linen-table-runner_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/linen-table-runner_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Lanh 100% tự nhiên',
@@ -463,10 +463,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.7,
                 'reviews_count' => 41,
                 'badge' => null,
-                'image_url' => '/storage/products/marble-coaster-set_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/marble-coaster-set_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/marble-coaster-set_0.jpg',
-                    '/storage/products/marble-coaster-set_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/marble-coaster-set_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/marble-coaster-set_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Marble trắng tự nhiên',
@@ -494,10 +494,10 @@ class ProductSeeder extends Seeder
                 'rating' => 4.8,
                 'reviews_count' => 36,
                 'badge' => 'Mới',
-                'image_url' => '/storage/products/ceramic-teapot_0.jpg',
+                'image_url' => 'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ceramic-teapot_0.jpg',
                 'gallery' => json_encode([
-                    '/storage/products/ceramic-teapot_0.jpg',
-                    '/storage/products/ceramic-teapot_1.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ceramic-teapot_0.jpg',
+                    'https://cdn.jsdelivr.net/gh/d0nj/aster-atelier@v1.0.0/public/storage/products/ceramic-teapot_1.jpg',
                 ]),
                 'highlights' => json_encode([
                     'Gốm thủ công',
