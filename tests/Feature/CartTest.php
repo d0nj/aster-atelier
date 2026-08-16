@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
+use App\Orders\CartStore;
+use App\Support\Money;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,9 +21,11 @@ class CartTest extends TestCase
         $response = $this->post(route('cart.store', $product), ['quantity' => 2]);
 
         $response->assertRedirect();
-        $response->assertSessionHas('store.cart', [
-            $product->id => 2,
-        ]);
+
+        $snapshot = $this->app->make(CartStore::class)->snapshot();
+
+        $this->assertSame(2, $snapshot->count());
+        $this->assertSame($product->id, $snapshot->lines->first()->product->id);
     }
 
     public function test_cart_item_quantity_can_be_updated(): void
@@ -30,12 +34,13 @@ class CartTest extends TestCase
 
         $product = Product::query()->where('slug', 'ember-reed-diffuser')->firstOrFail();
 
-        $this->withSession([
-            'store.cart' => [$product->id => 1],
-        ])->patch(route('cart.update', $product), ['quantity' => 4])
+        $cart = $this->app->make(CartStore::class);
+        $cart->add($product, 1);
+
+        $this->patch(route('cart.update', $product), ['quantity' => 4])
             ->assertRedirect(route('cart.index'));
 
-        $this->assertEquals(4, session('store.cart')[$product->id]);
+        $this->assertSame(4, $cart->snapshot()->count());
     }
 
     public function test_cart_page_renders_line_items(): void
@@ -44,12 +49,12 @@ class CartTest extends TestCase
 
         $product = Product::query()->where('slug', 'dune-linen-throw')->firstOrFail();
 
-        $response = $this->withSession([
-            'store.cart' => [$product->id => 3],
-        ])->get(route('cart.index'));
+        $this->app->make(CartStore::class)->add($product, 3);
+
+        $response = $this->get(route('cart.index'));
 
         $response->assertOk();
         $response->assertSee($product->name);
-        $response->assertSee(Product::formatCurrency((float) $product->price * 3), false);
+        $response->assertSee(Money::format((float) $product->price * 3), false);
     }
 }

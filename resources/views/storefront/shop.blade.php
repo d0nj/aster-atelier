@@ -61,7 +61,7 @@
             @forelse ($products as $product)
                 <article data-reveal class="product-card group">
                     <a href="{{ route('products.show', $product) }}" class="product-card-image block">
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy">
                     </a>
 
                     <div class="mt-5">
@@ -71,14 +71,14 @@
                                 <span class="product-badge">{{ $product->badge }}</span>
                             @endif
                         </div>
-                        <h2 class="mt-3 text-2xl leading-tight display-title">
+                        <h2 class="mt-3 text-xl leading-tight display-title">
                             <a href="{{ route('products.show', $product) }}">{{ $product->name }}</a>
                         </h2>
                     </div>
 
                     <p class="mt-3 text-sm leading-6 text-[color:var(--color-umber)]">{{ $product->tagline }}</p>
 
-                    <div class="mt-5 flex items-center justify-between">
+                    <div class="mt-auto flex items-center justify-between pt-5">
                         <div>
                             <p class="text-lg font-semibold">{{ $product->formatted_price }}</p>
                             <p class="text-sm text-[color:var(--color-umber)]">{{ number_format((float) $product->rating, 1, ',', '.') }}/5</p>

@@ -56,6 +56,17 @@
                 </div>
             @endif
 
+            @auth
+                @if (auth()->user()->is_readonly)
+                    <div class="section-shell pb-2">
+                        <div class="surface-panel flex items-center gap-3 px-5 py-4 text-sm font-semibold text-[color:var(--color-ink)]">
+                            <span class="admin-soft-chip">Chế độ xem thử</span>
+                            <span>Tài khoản này chỉ có quyền xem — không thể thêm, sửa hoặc xóa sản phẩm.</span>
+                        </div>
+                    </div>
+                @endif
+            @endauth
+
             <main class="section-shell pb-14 pt-4">
                 @yield('content')
             </main>

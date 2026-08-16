@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -41,11 +42,11 @@ class OrderItem extends Model
 
     public function getFormattedUnitPriceAttribute(): string
     {
-        return Product::formatCurrency($this->unit_price);
+        return Money::format($this->unit_price);
     }
 
     public function getFormattedLineTotalAttribute(): string
     {
-        return Product::formatCurrency($this->line_total);
+        return Money::format($this->line_total);
     }
 }

@@ -12,7 +12,7 @@
     --color-ivory: #f7f2ea;
     --color-latte: #eadcc6;
     --color-umber: #5b4635;
-    --color-clay: #b66d4b;
+    --color-clay: #9c5637;
     --color-forest: #2e4a3b;
     --color-ink: #181611;
 }
@@ -36,6 +36,11 @@
 
     img {
         image-rendering: auto;
+    }
+
+    :where(a, button):focus-visible {
+        outline: 2px solid var(--color-clay);
+        outline-offset: 3px;
     }
 }
 
@@ -74,11 +79,11 @@
     }
 
     .product-card {
-        @apply relative overflow-hidden rounded-[2rem] border border-white/80 bg-white/80 p-4 shadow-[0_24px_70px_rgba(24,22,17,0.08)] backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:shadow-[0_34px_90px_rgba(24,22,17,0.14)];
+        @apply relative flex flex-col overflow-hidden rounded-[2rem] border border-white/80 bg-white/80 p-4 shadow-[0_24px_70px_rgba(24,22,17,0.08)] backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:shadow-[0_34px_90px_rgba(24,22,17,0.14)];
     }
 
     .product-card-image {
-        @apply aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-[color:var(--color-latte)]/40;
+        @apply aspect-square overflow-hidden rounded-[1.4rem] bg-[color:var(--color-latte)]/40;
     }
 
     .product-card-image img {
@@ -106,10 +111,6 @@
 
     .nav-link {
         @apply text-sm font-semibold text-[color:var(--color-umber)] transition duration-300 hover:text-[color:var(--color-ink)];
-    }
-
-    .nav-utility-chip {
-        @apply inline-flex max-w-40 items-center rounded-full bg-[color:var(--color-latte)] px-3 py-2 text-sm font-semibold text-[color:var(--color-ink)];
     }
 
     .product-badge {
@@ -183,16 +184,18 @@
         background-color: var(--color-ivory);
     }
 
-    .reveal {
-        opacity: 0;
-        transform: translateY(24px);
-        transition:
-            opacity 700ms ease,
-            transform 700ms ease;
-    }
+    @media (prefers-reduced-motion: no-preference) {
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition:
+                opacity 700ms ease,
+                transform 700ms ease;
+        }
 
-    .reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0);
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }

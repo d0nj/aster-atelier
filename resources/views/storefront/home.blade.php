@@ -46,6 +46,7 @@
                     <img
                         src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80"
                         alt="Không gian phòng khách tuyển chọn"
+                        fetchpriority="high"
                         class="h-full w-full object-cover"
                     >
                 </div>
@@ -93,7 +94,7 @@
                 @foreach ($newArrivals as $product)
                     <article data-reveal class="product-card group">
                         <a href="{{ route('products.show', $product) }}" class="product-card-image block">
-                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy">
                         </a>
 
                         <div class="mt-5">
@@ -105,7 +106,7 @@
                                     <span class="product-badge">{{ $product->badge }}</span>
                                 @endif
                             </div>
-                            <h3 class="mt-3 text-2xl leading-tight display-title">
+                            <h3 class="mt-3 text-xl leading-tight display-title">
                                 <a href="{{ route('products.show', $product) }}">{{ $product->name }}</a>
                             </h3>
                             <p class="mt-2 max-w-sm text-sm leading-6 text-[color:var(--color-umber)]">
@@ -113,7 +114,7 @@
                             </p>
                         </div>
 
-                        <div class="mt-6 flex items-center justify-between gap-4">
+                        <div class="mt-auto flex items-center justify-between gap-4 pt-6">
                             <div>
                                 <p class="text-lg font-semibold text-[color:var(--color-ink)]">{{ $product->formatted_price }}</p>
                                 <p class="text-sm text-[color:var(--color-umber)]">{{ number_format((float) $product->rating, 1, ',', '.') }}/5 từ {{ $product->reviews_count }} đánh giá</p>
@@ -132,11 +133,12 @@
     <section class="py-14 sm:py-18">
         <div class="section-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <div data-reveal class="overflow-hidden rounded-[2.5rem]">
-                <img
-                    src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80"
-                    alt="Không gian nội thất được biên tập"
-                    class="h-full min-h-[26rem] w-full object-cover"
-                >
+                    <img
+                        src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80"
+                        alt="Không gian nội thất được biên tập"
+                        loading="lazy"
+                        class="h-full min-h-[26rem] w-full object-cover"
+                    >
             </div>
             <div data-reveal class="surface-panel flex flex-col justify-between p-8 sm:p-10">
                 <div>
@@ -175,7 +177,7 @@
                     <article data-reveal class="surface-panel overflow-hidden">
                         <div class="grid gap-6 p-4 sm:p-5 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
                             <a href="{{ route('products.show', $product) }}" class="overflow-hidden rounded-[2rem]">
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full min-h-[22rem] w-full object-cover">
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy" class="h-full min-h-[22rem] w-full object-cover">
                             </a>
                             <div class="p-3 sm:p-4">
                                 <p class="eyebrow">{{ $product->category }}</p>

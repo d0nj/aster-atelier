@@ -15,7 +15,7 @@ class AdminProductManagementTest extends TestCase
     {
         $this->seed();
 
-        $admin = User::query()->where('email', 'test@example.com')->firstOrFail();
+        $admin = User::factory()->create(['is_admin' => true]);
 
         $response = $this->actingAs($admin)->get(route('admin.products.index'));
 
@@ -28,7 +28,7 @@ class AdminProductManagementTest extends TestCase
     {
         $this->seed();
 
-        $admin = User::query()->where('email', 'test@example.com')->firstOrFail();
+        $admin = User::factory()->create(['is_admin' => true]);
 
         $response = $this->actingAs($admin)->post(route('admin.products.store'), [
             'name' => 'Bàn console Sora',

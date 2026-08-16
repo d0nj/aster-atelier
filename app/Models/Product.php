@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -49,7 +50,7 @@ class Product extends Model
 
     public function getFormattedPriceAttribute(): string
     {
-        return self::formatCurrency($this->price);
+        return Money::format($this->price);
     }
 
     public function getFormattedComparePriceAttribute(): ?string
@@ -58,16 +59,7 @@ class Product extends Model
             return null;
         }
 
-        return self::formatCurrency($this->compare_price);
-    }
-
-    public static function formatCurrency(float|int|string|null $amount): string
-    {
-        if ($amount === null || $amount === '') {
-            return '';
-        }
-
-        return number_format((float) $amount, 0, ',', '.') . ' ₫';
+        return Money::format($this->compare_price);
     }
 
     /**

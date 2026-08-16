@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -46,21 +47,16 @@ class Order extends Model
 
     public function getFormattedSubtotalAttribute(): string
     {
-        return Product::formatCurrency($this->subtotal);
+        return Money::format($this->subtotal);
     }
 
     public function getFormattedShippingAmountAttribute(): string
     {
-        return Product::formatCurrency($this->shipping_amount);
+        return Money::format($this->shipping_amount);
     }
 
     public function getFormattedTotalAmountAttribute(): string
     {
-        return Product::formatCurrency($this->total_amount);
-    }
-
-    public function isOwnedBy(?User $user): bool
-    {
-        return $user !== null && $this->user_id === $user->id;
+        return Money::format($this->total_amount);
     }
 }

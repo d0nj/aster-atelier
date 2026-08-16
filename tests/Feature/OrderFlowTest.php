@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Orders\CartStore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,9 +19,10 @@ class OrderFlowTest extends TestCase
 
         $product = Product::query()->where('slug', 'tidal-pour-over-set')->firstOrFail();
 
-        $response = $this->withSession([
-            'store.cart' => [$product->id => 2],
-        ])->post(route('checkout.store'), [
+        $cart = $this->app->make(CartStore::class);
+        $cart->add($product, 2);
+
+        $response = $this->post(route('checkout.store'), [
             'customer_name' => 'Tran Thi B',
             'customer_email' => 'guest@example.com',
             'customer_phone' => '0900000000',
@@ -41,7 +43,7 @@ class OrderFlowTest extends TestCase
             'product_id' => $product->id,
             'quantity' => 2,
         ]);
-        $this->assertEmpty(session('store.cart', []));
+        $this->assertTrue($cart->snapshot()->lines->isEmpty());
     }
 
     public function test_authenticated_user_can_view_their_orders(): void
@@ -56,10 +58,9 @@ class OrderFlowTest extends TestCase
 
         $product = Product::query()->where('slug', 'ember-reed-diffuser')->firstOrFail();
 
+        $this->app->make(CartStore::class)->add($product, 1);
+
         $this->actingAs($user)
-            ->withSession([
-                'store.cart' => [$product->id => 1],
-            ])
             ->post(route('checkout.store'), [
                 'customer_name' => $user->name,
                 'customer_email' => $user->email,
@@ -88,9 +89,9 @@ class OrderFlowTest extends TestCase
 
         $product = Product::query()->where('slug', 'dune-linen-throw')->firstOrFail();
 
-        $this->withSession([
-            'store.cart' => [$product->id => 1],
-        ])->post(route('checkout.store'), [
+        $this->app->make(CartStore::class)->add($product, 1);
+
+        $this->post(route('checkout.store'), [
             'customer_name' => 'Le Thi D',
             'customer_email' => 'lookup@example.com',
             'customer_phone' => '0922222222',
@@ -106,5 +107,71 @@ class OrderFlowTest extends TestCase
         ])->assertOk()
             ->assertSee($order->order_number)
             ->assertSee($product->name);
+    }
+
+    public function test_checkout_page_renders_cart_summary(): void
+    {
+        $this->seed();
+
+        $product = Product::query()->where('slug', 'tidal-pour-over-set')->firstOrFail();
+
+        $this->app->make(CartStore::class)->add($product, 2);
+
+        $this->get(route('checkout.create'))
+            ->assertOk()
+            ->assertSee($product->name)
+            ->assertSee('SL 2')
+            ->assertSee('Tóm tắt đơn hàng');
+    }
+
+    public function test_success_page_is_visible_right_after_checkout_only(): void
+    {
+        $this->seed();
+
+        $product = Product::query()->where('slug', 'tidal-pour-over-set')->firstOrFail();
+
+        $this->app->make(CartStore::class)->add($product, 1);
+
+        $this->post(route('checkout.store'), [
+            'customer_name' => 'Guest E',
+            'customer_email' => 'e@example.com',
+            'customer_phone' => '0933333333',
+            'shipping_address' => '1 Duong Test, Quan 1, TP.HCM',
+            'notes' => '',
+        ]);
+
+        $order = Order::query()->where('customer_email', 'e@example.com')->firstOrFail();
+
+        $this->get(route('orders.success', $order))->assertOk();
+
+        $this->flushSession();
+
+        $this->get(route('orders.success', $order))->assertForbidden();
+    }
+
+    public function test_user_cannot_view_another_users_order(): void
+    {
+        $this->seed();
+
+        $buyer = User::factory()->create();
+        $product = Product::query()->where('slug', 'ember-reed-diffuser')->firstOrFail();
+
+        $this->app->make(CartStore::class)->add($product, 1);
+
+        $this->actingAs($buyer)->post(route('checkout.store'), [
+            'customer_name' => $buyer->name,
+            'customer_email' => $buyer->email,
+            'customer_phone' => '0944444444',
+            'shipping_address' => '2 Duong Test, Quan 1, TP.HCM',
+            'notes' => '',
+        ]);
+
+        $order = Order::query()->where('user_id', $buyer->id)->firstOrFail();
+
+        $stranger = User::factory()->create();
+
+        $this->actingAs($stranger)
+            ->get(route('orders.show', $order))
+            ->assertForbidden();
     }
 }

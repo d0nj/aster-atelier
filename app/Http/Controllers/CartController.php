@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Support\CartStore;
+use App\Orders\CartStore;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 

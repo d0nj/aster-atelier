@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    env_file: .env
+    ports:
+      - "127.0.0.1:9000:9000"
+    volumes:
+      - ./database:/var/www/html/database
+    restart: unless-stopped

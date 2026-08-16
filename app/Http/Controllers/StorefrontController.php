@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Support\CartStore;
+use App\Orders\CartStore;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class StorefrontController extends Controller
 {
-    public function home(CartStore $cart): View
+    public function home(): View
     {
         $featured = Product::query()
             ->where('is_featured', true)
@@ -35,11 +34,10 @@ class StorefrontController extends Controller
             'featured' => $featured,
             'newArrivals' => $newArrivals,
             'collections' => $collections,
-            ...$this->sharedData($cart),
         ]);
     }
 
-    public function shop(Request $request, CartStore $cart): View
+    public function shop(Request $request): View
     {
         $selectedCategory = $request->string('category')->toString();
         $selectedSort = $request->string('sort')->toString() ?: 'curated';
@@ -67,11 +65,10 @@ class StorefrontController extends Controller
             'categories' => $categories,
             'selectedCategory' => $selectedCategory,
             'selectedSort' => $selectedSort,
-            ...$this->sharedData($cart),
         ]);
     }
 
-    public function show(Product $product, CartStore $cart): View
+    public function show(Product $product): View
     {
         $related = Product::query()
             ->where('category', $product->category)
@@ -83,31 +80,18 @@ class StorefrontController extends Controller
         return view('storefront.product', [
             'product' => $product,
             'related' => $related,
-            ...$this->sharedData($cart),
         ]);
     }
 
     public function cart(CartStore $cart): View
     {
-        $items = $cart->items();
+        $snapshot = $cart->snapshot();
 
         return view('storefront.cart', [
-            'items' => $items,
-            'cartSubtotal' => $cart->subtotal(),
-            'cartShipping' => $cart->shipping(),
-            'cartTotal' => $cart->total(),
-            'cartCount' => $cart->count(),
+            'items' => $snapshot->lines,
+            'cartSubtotal' => $snapshot->subtotal,
+            'cartShipping' => $snapshot->shipping,
+            'cartTotal' => $snapshot->total,
         ]);
-    }
-
-    /**
-     * @return array<string, int|float|Collection<int, Product>>
-     */
-    private function sharedData(CartStore $cart): array
-    {
-        return [
-            'cartCount' => $cart->count(),
-            'cartSubtotal' => $cart->subtotal(),
-        ];
     }
 }

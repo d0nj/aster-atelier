@@ -33,6 +33,12 @@
                     <a href="{{ route('register') }}" class="btn-secondary">Tạo tài khoản</a>
                 </div>
             </form>
+            <div class="mt-6 rounded-[1.5rem] border border-black/5 bg-[color:var(--color-ivory)] px-5 py-4">
+                <p class="text-sm font-semibold text-[color:var(--color-ink)]">Xem thử bảng quản trị</p>
+                <p class="mt-1 text-sm leading-6 text-[color:var(--color-umber)]">
+                    Tài khoản demo chỉ đọc: <span class="font-semibold text-[color:var(--color-clay)]">demo@example.com</span> / <span class="font-semibold text-[color:var(--color-clay)]">password</span>
+                </p>
+            </div>
         </div>
     </section>
 @endsection

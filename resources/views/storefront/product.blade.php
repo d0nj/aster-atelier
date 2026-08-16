@@ -9,7 +9,7 @@
             <div class="space-y-5">
                 @foreach ($product->gallery as $image)
                     <div data-reveal class="overflow-hidden rounded-[2.5rem]">
-                        <img src="{{ $image }}" alt="{{ $product->name }}" class="h-full min-h-[21rem] w-full object-cover lg:min-h-[26rem]">
+                        <img src="{{ $image }}" alt="{{ $product->name }}" @unless($loop->first) loading="lazy" @endunless class="h-full min-h-[21rem] w-full object-cover lg:min-h-[26rem]">
                     </div>
                 @endforeach
             </div>
@@ -91,7 +91,7 @@
                 @foreach ($related as $item)
                     <article data-reveal class="product-card group">
                         <a href="{{ route('products.show', $item) }}" class="product-card-image block">
-                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}">
+                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" loading="lazy">
                         </a>
                         <div class="mt-5">
                             <div class="flex flex-wrap items-center gap-2">
@@ -100,10 +100,10 @@
                                     <span class="product-badge">{{ $item->badge }}</span>
                                 @endif
                             </div>
-                            <h3 class="mt-3 text-2xl display-title">{{ $item->name }}</h3>
+                            <h3 class="mt-3 text-xl display-title">{{ $item->name }}</h3>
                             <p class="mt-2 text-sm leading-6 text-[color:var(--color-umber)]">{{ $item->tagline }}</p>
                         </div>
-                        <div class="mt-5 flex items-center justify-between">
+                        <div class="mt-auto flex items-center justify-between pt-5">
                             <p class="text-lg font-semibold">{{ $item->formatted_price }}</p>
                             <a href="{{ route('products.show', $item) }}" class="btn-secondary px-4 py-2.5">Xem</a>
                         </div>

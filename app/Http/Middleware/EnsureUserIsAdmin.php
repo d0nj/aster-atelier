@@ -14,6 +14,12 @@ class EnsureUserIsAdmin
 
         abort_unless($user && $user->is_admin, 403);
 
+        if ($user->is_readonly && in_array($request->method(), ['POST', 'PUT', 'PATCH', 'DELETE'], true)) {
+            return redirect()
+                ->back()
+                ->with('admin_status', 'Tài khoản xem thử chỉ có quyền xem, không thể thay đổi dữ liệu.');
+        }
+
         return $next($request);
     }
 }

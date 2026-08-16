@@ -28,7 +28,7 @@
                         <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3">
                             <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-ink)] text-sm font-bold text-[color:var(--color-ivory)]">AA</span>
                             <span class="min-w-0">
-                                <span class="block truncate text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-clay)]">Aster Atelier</span>
+                                <span class="block truncate text-xs font-semibold uppercase tracking-[0.12em] sm:text-sm sm:tracking-[0.28em] text-[color:var(--color-clay)]">Aster Atelier</span>
                                 <span class="hidden truncate text-xs text-[color:var(--color-umber)]/75 xl:block">Đồ vật cho những căn phòng sống chậm</span>
                             </span>
                         </a>
@@ -69,11 +69,16 @@
                             <button
                                 type="button"
                                 data-mobile-toggle
+                                aria-expanded="false"
+                                aria-controls="mobile-menu"
                                 class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--color-umber)]/15 bg-white/85 text-[color:var(--color-ink)] lg:hidden"
-                                aria-label="Toggle navigation"
+                                aria-label="Mở menu điều hướng"
                             >
-                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <svg data-icon-open class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                     <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                                <svg data-icon-close class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
                                 </svg>
                             </button>
                         </div>
@@ -81,6 +86,7 @@
                 </div>
 
                 <div
+                    id="mobile-menu"
                     data-mobile-menu
                     data-open="false"
                     class="surface-panel mt-3 hidden p-4 lg:hidden"
@@ -119,7 +125,9 @@
             <div class="section-shell relative z-30 pt-24 lg:pt-28">
                 <div class="surface-panel mt-4 flex items-center justify-between gap-4 px-5 py-4 text-sm text-[color:var(--color-ink)]">
                     <span>{{ session('status') }}</span>
-                    <a href="{{ route('cart.index') }}" class="font-semibold text-[color:var(--color-clay)]">Xem giỏ hàng</a>
+                    @if (($cartCount ?? 0) > 0)
+                        <a href="{{ route('cart.index') }}" class="font-semibold text-[color:var(--color-clay)]">Xem giỏ hàng</a>
+                    @endif
                 </div>
             </div>
         @endif

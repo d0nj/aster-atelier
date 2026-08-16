@@ -3,62 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Support\CartStore;
+use App\Orders\OrderAccess;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index(CartStore $cart): View
+    public function index(): View
     {
         $user = request()->user();
 
         return view('orders.index', [
             'orders' => $user->orders()->with('items')->latest()->get(),
-            'cartCount' => $cart->count(),
-            'cartSubtotal' => $cart->subtotal(),
         ]);
     }
 
-    public function show(Order $order, CartStore $cart): View
+    public function show(Order $order, OrderAccess $access): View
     {
-        abort_unless($order->isOwnedBy(request()->user()), 403);
+        abort_unless($access->isOwner($order, request()->user()), 403);
 
         $order->load('items');
 
         return view('orders.show', [
             'order' => $order,
-            'cartCount' => $cart->count(),
-            'cartSubtotal' => $cart->subtotal(),
         ]);
     }
 
-    public function success(Order $order, CartStore $cart, Request $request): View
+    public function success(Order $order, OrderAccess $access): View
     {
-        $allowed = $request->session()->get('last_order_id') === $order->id
-            || $order->isOwnedBy($request->user());
-
-        abort_unless($allowed, 403);
+        abort_unless($access->canView($order, request()->user()), 403);
 
         $order->load('items');
 
         return view('orders.success', [
             'order' => $order,
-            'cartCount' => $cart->count(),
-            'cartSubtotal' => $cart->subtotal(),
         ]);
     }
 
-    public function lookup(CartStore $cart): View
+    public function lookup(): View
     {
         return view('orders.lookup', [
             'order' => null,
-            'cartCount' => $cart->count(),
-            'cartSubtotal' => $cart->subtotal(),
         ]);
     }
 
-    public function search(Request $request, CartStore $cart): View
+    public function search(Request $request, OrderAccess $access): View
     {
         $request->merge([
             'order_number' => strtoupper(trim((string) $request->input('order_number'))),
@@ -70,17 +59,11 @@ class OrderController extends Controller
             'customer_email' => ['required', 'email', 'max:255'],
         ]);
 
-        $order = Order::query()
-            ->with('items')
-            ->where('order_number', $validated['order_number'])
-            ->where('customer_email', $validated['customer_email'])
-            ->first();
+        $order = $access->lookup($validated['order_number'], $validated['customer_email']);
 
         return view('orders.lookup', [
             'order' => $order,
             'lookupAttempted' => true,
-            'cartCount' => $cart->count(),
-            'cartSubtotal' => $cart->subtotal(),
         ]);
     }
 }

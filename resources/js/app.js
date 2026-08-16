@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const revealTargets = document.querySelectorAll('[data-reveal]');
 
-    if (revealTargets.length) {
+    if (revealTargets.length && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -37,10 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mobileToggle && mobileMenu) {
+        const iconOpen = mobileToggle.querySelector('[data-icon-open]');
+        const iconClose = mobileToggle.querySelector('[data-icon-close]');
+
         mobileToggle.addEventListener('click', () => {
             const isOpen = mobileMenu.dataset.open === 'true';
             mobileMenu.dataset.open = String(!isOpen);
             mobileMenu.classList.toggle('hidden', isOpen);
+            mobileToggle.setAttribute('aria-expanded', String(!isOpen));
+            mobileToggle.setAttribute('aria-label', isOpen ? 'Mở menu điều hướng' : 'Đóng menu điều hướng');
+
+            if (iconOpen && iconClose) {
+                iconOpen.classList.toggle('hidden', !isOpen);
+                iconClose.classList.toggle('hidden', isOpen);
+            }
         });
     }
 });

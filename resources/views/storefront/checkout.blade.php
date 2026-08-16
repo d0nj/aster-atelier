@@ -58,12 +58,12 @@
                 <div class="mt-6 space-y-4">
                     @foreach ($items as $item)
                         <div class="flex items-start gap-4">
-                            <img src="{{ $item['product']->image_url }}" alt="{{ $item['product']->name }}" class="h-18 w-18 rounded-[1.25rem] object-cover">
+                            <img src="{{ $item->product->image_url }}" alt="{{ $item->product->name }}" class="h-18 w-18 rounded-[1.25rem] object-cover">
                             <div class="min-w-0 flex-1">
-                                <p class="text-sm font-semibold text-[color:var(--color-ink)]">{{ $item['product']->name }}</p>
-                                <p class="mt-1 text-xs text-[color:var(--color-umber)]">SL {{ $item['quantity'] }}</p>
+                                <p class="text-sm font-semibold text-[color:var(--color-ink)]">{{ $item->product->name }}</p>
+                                <p class="mt-1 text-xs text-[color:var(--color-umber)]">SL {{ $item->quantity }}</p>
                             </div>
-                            <p class="text-sm font-semibold text-[color:var(--color-ink)]">{{ \App\Models\Product::formatCurrency($item['line_total']) }}</p>
+                            <p class="text-sm font-semibold text-[color:var(--color-ink)]">{{ \App\Support\Money::format($item->lineTotal) }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -71,15 +71,15 @@
                 <div class="mt-6 space-y-4 border-t border-black/5 pt-6 text-sm">
                     <div class="flex items-center justify-between">
                         <span class="text-[color:var(--color-umber)]">Tạm tính</span>
-                        <span class="font-semibold text-[color:var(--color-ink)]">{{ \App\Models\Product::formatCurrency($cartSubtotal) }}</span>
+                        <span class="font-semibold text-[color:var(--color-ink)]">{{ \App\Support\Money::format($cartSubtotal) }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-[color:var(--color-umber)]">Vận chuyển</span>
-                        <span class="font-semibold text-[color:var(--color-ink)]">{{ $cartShipping == 0.0 ? 'Miễn phí' : \App\Models\Product::formatCurrency($cartShipping) }}</span>
+                        <span class="font-semibold text-[color:var(--color-ink)]">{{ $cartShipping == 0.0 ? 'Miễn phí' : \App\Support\Money::format($cartShipping) }}</span>
                     </div>
                     <div class="flex items-center justify-between border-t border-black/5 pt-4">
                         <span class="text-lg font-semibold text-[color:var(--color-ink)]">Tổng cộng</span>
-                        <span class="text-2xl font-semibold text-[color:var(--color-ink)]">{{ \App\Models\Product::formatCurrency($cartTotal) }}</span>
+                        <span class="text-2xl font-semibold text-[color:var(--color-ink)]">{{ \App\Support\Money::format($cartTotal) }}</span>
                     </div>
                 </div>
             </aside>

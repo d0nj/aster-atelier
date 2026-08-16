@@ -4,8 +4,8 @@
     <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <div class="admin-stat">
             <p class="eyebrow">Doanh thu</p>
-            <p class="admin-kpi-value">{{ \App\Models\Product::formatCurrency($totalRevenue) }}</p>
-            <p class="mt-3 text-sm text-[color:var(--color-umber)]">Giá trị trung bình mỗi đơn: {{ \App\Models\Product::formatCurrency($averageOrderValue) }}</p>
+            <p class="admin-kpi-value">{{ \App\Support\Money::format($totalRevenue) }}</p>
+            <p class="mt-3 text-sm text-[color:var(--color-umber)]">Giá trị trung bình mỗi đơn: {{ \App\Support\Money::format($averageOrderValue) }}</p>
         </div>
         <div class="admin-stat">
             <p class="eyebrow">Đơn hàng</p>
@@ -98,7 +98,9 @@
             <div class="flex flex-wrap gap-2">
                 <span class="admin-soft-chip">{{ number_format($categoryCount, 0, ',', '.') }} danh mục</span>
                 <span class="admin-soft-chip">{{ number_format($saleProducts, 0, ',', '.') }} khuyến mại</span>
-                <a href="#product-composer" class="btn-primary px-4 py-2.5">Thêm sản phẩm</a>
+                @if (!auth()->user()?->is_readonly)
+                    <a href="#product-composer" class="btn-primary px-4 py-2.5">Thêm sản phẩm</a>
+                @endif
             </div>
         </div>
 
@@ -167,13 +169,15 @@
                                     <div class="flex flex-wrap justify-end gap-2">
                                         <a href="{{ route('products.show', $product) }}" class="btn-secondary px-4 py-2.5">Xem</a>
                                         <a href="{{ route('admin.products.edit', $product) }}" class="btn-secondary px-4 py-2.5">Sửa</a>
-                                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="rounded-full border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-700 transition hover:bg-red-50">
-                                                Xóa
-                                            </button>
-                                        </form>
+                                        @if (!auth()->user()?->is_readonly)
+                                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="rounded-full border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-700 transition hover:bg-red-50">
+                                                    Xóa
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -239,7 +243,8 @@
         </div>
     </section>
 
-    <section id="product-composer" class="mt-8 surface-panel p-6 sm:p-8">
+    @if (!auth()->user()?->is_readonly)
+        <section id="product-composer" class="mt-8 surface-panel p-6 sm:p-8">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
                 <p class="eyebrow">Trình tạo sản phẩm</p>
@@ -262,5 +267,6 @@
                 'product' => null,
             ])
         </div>
-    </section>
+        </section>
+    @endif
 @endsection

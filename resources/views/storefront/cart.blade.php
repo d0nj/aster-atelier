@@ -25,36 +25,36 @@
                         <article data-reveal class="surface-panel overflow-hidden p-4 sm:p-5">
                             <div class="grid gap-5 sm:grid-cols-[11rem_1fr]">
                                 <div class="overflow-hidden rounded-[1.75rem]">
-                                    <img src="{{ $item['product']->image_url }}" alt="{{ $item['product']->name }}" class="h-full min-h-[12rem] w-full object-cover">
+                                    <img src="{{ $item->product->image_url }}" alt="{{ $item->product->name }}" class="h-full min-h-[12rem] w-full object-cover">
                                 </div>
                                 <div class="flex flex-col justify-between gap-5">
                                     <div class="flex items-start justify-between gap-4">
                                         <div>
-                                            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--color-clay)]">{{ $item['product']->category }}</p>
-                                            <h2 class="mt-2 text-3xl leading-tight display-title">{{ $item['product']->name }}</h2>
-                                            <p class="mt-3 text-sm leading-6 text-[color:var(--color-umber)]">{{ $item['product']->tagline }}</p>
+                                            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--color-clay)]">{{ $item->product->category }}</p>
+                                            <h2 class="mt-2 text-3xl leading-tight display-title">{{ $item->product->name }}</h2>
+                                            <p class="mt-3 text-sm leading-6 text-[color:var(--color-umber)]">{{ $item->product->tagline }}</p>
                                         </div>
-                                        <p class="text-lg font-semibold text-[color:var(--color-ink)]">{{ \App\Models\Product::formatCurrency($item['line_total']) }}</p>
+                                        <p class="text-lg font-semibold text-[color:var(--color-ink)]">{{ \App\Support\Money::format($item->lineTotal) }}</p>
                                     </div>
 
                                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                        <form action="{{ route('cart.update', $item['product']) }}" method="POST" class="flex items-center gap-3">
+                                        <form action="{{ route('cart.update', $item->product) }}" method="POST" class="flex items-center gap-3">
                                             @csrf
                                             @method('PATCH')
-                                            <label for="quantity-{{ $item['product']->id }}" class="text-sm font-semibold text-[color:var(--color-umber)]">SL</label>
+                                            <label for="quantity-{{ $item->product->id }}" class="text-sm font-semibold text-[color:var(--color-umber)]">SL</label>
                                             <input
-                                                id="quantity-{{ $item['product']->id }}"
+                                                id="quantity-{{ $item->product->id }}"
                                                 name="quantity"
                                                 type="number"
                                                 min="1"
                                                 max="8"
-                                                value="{{ $item['quantity'] }}"
+                                                value="{{ $item->quantity }}"
                                                 class="quantity-input"
                                             >
                                             <button type="submit" class="btn-secondary px-4 py-2.5">Cập nhật</button>
                                         </form>
 
-                                        <form action="{{ route('cart.destroy', $item['product']) }}" method="POST">
+                                        <form action="{{ route('cart.destroy', $item->product) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-sm font-semibold text-[color:var(--color-clay)]">Xóa</button>
@@ -75,24 +75,24 @@
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-[color:var(--color-umber)]">Tạm tính</span>
-                            <span class="font-semibold text-[color:var(--color-ink)]">{{ \App\Models\Product::formatCurrency($cartSubtotal) }}</span>
+                            <span class="font-semibold text-[color:var(--color-ink)]">{{ \App\Support\Money::format($cartSubtotal) }}</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-[color:var(--color-umber)]">Vận chuyển</span>
                             <span class="font-semibold text-[color:var(--color-ink)]">
-                                {{ $cartShipping == 0.0 ? 'Miễn phí' : \App\Models\Product::formatCurrency($cartShipping) }}
+                                {{ $cartShipping == 0.0 ? 'Miễn phí' : \App\Support\Money::format($cartShipping) }}
                             </span>
                         </div>
                     </div>
 
                     <div class="mt-6 rounded-[1.5rem] bg-[color:var(--color-ivory)] px-4 py-3 text-xs text-[color:var(--color-umber)]">
-                        Miễn phí vận chuyển cho đơn từ {{ \App\Models\Product::formatCurrency(5000000) }}.
+                        Miễn phí vận chuyển cho đơn từ {{ \App\Support\Money::format(5000000) }}.
                     </div>
 
                     <div class="mt-6 border-t border-black/5 pt-6">
                         <div class="flex items-center justify-between">
                             <span class="text-lg font-semibold text-[color:var(--color-ink)]">Tổng cộng</span>
-                            <span class="text-2xl font-semibold text-[color:var(--color-ink)]">{{ \App\Models\Product::formatCurrency($cartTotal) }}</span>
+                            <span class="text-2xl font-semibold text-[color:var(--color-ink)]">{{ \App\Support\Money::format($cartTotal) }}</span>
                         </div>
                     </div>
 

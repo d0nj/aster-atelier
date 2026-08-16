@@ -1,4 +1,5 @@
 @php
+    $readonly = auth()->user()?->is_readonly ?? false;
     $specsValue = old(
         'specs_text',
         isset($product) && $product
@@ -7,13 +8,14 @@
     );
 @endphp
 
-<form action="{{ $action }}" method="POST" class="space-y-6">
+<form action="{{ $action }}" method="POST">
     @csrf
     @isset($method)
         @method($method)
     @endisset
 
-    <div class="grid gap-5 md:grid-cols-2">
+    <fieldset @disabled($readonly) class="space-y-6">
+        <div class="grid gap-5 md:grid-cols-2">
         <div>
             <label for="name" class="label-text">Tên sản phẩm</label>
             <input id="name" name="name" type="text" value="{{ old('name', $product->name ?? '') }}" class="input-shell w-full">
@@ -122,8 +124,13 @@
         @error('specs_text')<p class="label-note text-red-600">{{ $message }}</p>@enderror
     </div>
 
-    <div class="flex flex-wrap gap-3">
-        <button type="submit" class="btn-primary">{{ $submitLabel }}</button>
-        <a href="{{ route('admin.products.index') }}" class="btn-secondary">Quay lại danh sách</a>
-    </div>
+        <div class="flex flex-wrap gap-3">
+            @if ($readonly)
+                <span class="rounded-full border border-black/10 bg-white/60 px-5 py-3 text-sm font-semibold text-[color:var(--color-umber)]">Chế độ xem thử — không thể lưu thay đổi</span>
+            @else
+                <button type="submit" class="btn-primary">{{ $submitLabel }}</button>
+            @endif
+            <a href="{{ route('admin.products.index') }}" class="btn-secondary">Quay lại danh sách</a>
+        </div>
+    </fieldset>
 </form>
