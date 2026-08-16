@@ -1,25 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
     const revealTargets = document.querySelectorAll('[data-reveal]');
+    let revealObserver = null;
 
     if (revealTargets.length && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(
+        revealObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
+                        revealObserver.unobserve(entry.target);
                     }
                 });
             },
             { threshold: 0.16 }
         );
-
-        revealTargets.forEach((target, index) => {
-            target.classList.add('reveal');
-            target.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
-            observer.observe(target);
-        });
     }
+
+    const applyReveal = (root = document) => {
+        if (!revealObserver) {
+            return;
+        }
+
+        root.querySelectorAll('[data-reveal]:not(.reveal)').forEach((target) => {
+            target.classList.add('reveal');
+            revealObserver.observe(target);
+        });
+    };
+
+    applyReveal();
 
     const header = document.querySelector('[data-site-header]');
     const mobileToggle = document.querySelector('[data-mobile-toggle]');
@@ -74,46 +82,84 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2600);
     };
 
-    document.querySelectorAll('form[data-add-to-cart]').forEach((form) => {
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const button = form.querySelector('button[type="submit"]');
-            const originalLabel = button ? button.textContent : '';
-
-            if (button) {
-                button.disabled = true;
-                button.textContent = 'Đang thêm…';
-            }
-
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: new FormData(form),
-                    headers: { Accept: 'application/json' },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
-                const payload = await response.json();
-
-                cartCountBadges.forEach((badge) => {
-                    badge.textContent = String(payload.count);
-                });
-
-                showCartToast(payload.message);
-            } catch (error) {
-                // Network or server failure: fall back to a normal form submit.
-                form.submit();
-                return;
-            } finally {
-                if (button) {
-                    button.disabled = false;
-                    button.textContent = originalLabel;
-                }
-            }
+    const setCartCount = (count) => {
+        document.querySelectorAll('[data-cart-count]').forEach((badge) => {
+            badge.textContent = String(count);
         });
+    };
+
+    const submitAsJson = async (form) => {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        return response.json();
+    };
+
+    const withBusyButton = async (form, busyLabel, work) => {
+        const button = form.querySelector('button[type="submit"]');
+        const originalLabel = button ? button.textContent : '';
+
+        if (button) {
+            button.disabled = true;
+            button.textContent = busyLabel;
+        }
+
+        try {
+            await work();
+        } finally {
+            if (button) {
+                button.disabled = false;
+                button.textContent = originalLabel;
+            }
+        }
+    };
+
+    const handleAddToCart = (form) => {
+        withBusyButton(form, 'Đang thêm…', async () => {
+            const payload = await submitAsJson(form);
+            setCartCount(payload.count);
+            showCartToast(payload.message);
+        }).catch(() => form.submit());
+    };
+
+    const handleCartMutation = (form) => {
+        const button = form.querySelector('button[type="submit"]');
+        const busyLabel = button?.textContent.trim() === 'Xóa' ? 'Đang xóa…' : 'Đang cập nhật…';
+
+        withBusyButton(form, busyLabel, async () => {
+            const payload = await submitAsJson(form);
+
+            const cartBody = document.querySelector('[data-cart-body]');
+            if (cartBody && payload.html) {
+                cartBody.innerHTML = payload.html;
+                applyReveal(cartBody);
+            }
+
+            setCartCount(payload.count);
+            showCartToast(payload.message);
+        }).catch(() => form.submit());
+    };
+
+    document.addEventListener('submit', (event) => {
+        const form = event.target.closest('form[data-add-to-cart], form[data-cart-mutate]');
+
+        if (!form) {
+            return;
+        }
+
+        event.preventDefault();
+
+        if (form.hasAttribute('data-add-to-cart')) {
+            handleAddToCart(form);
+        } else {
+            handleCartMutation(form);
+        }
     });
 });

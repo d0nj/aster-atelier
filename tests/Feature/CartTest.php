@@ -60,6 +60,48 @@ class CartTest extends TestCase
         $this->assertSame(4, $cart->snapshot()->count());
     }
 
+    public function test_cart_item_quantity_can_be_updated_via_json(): void
+    {
+        $this->seed();
+
+        $product = Product::query()->where('slug', 'ember-reed-diffuser')->firstOrFail();
+
+        $cart = $this->app->make(CartStore::class);
+        $cart->add($product, 1);
+
+        $response = $this->patchJson(route('cart.update', $product), ['quantity' => 4]);
+
+        $response->assertOk()
+            ->assertJson([
+                'count' => 4,
+                'message' => "Đã cập nhật số lượng cho {$product->name}.",
+            ]);
+
+        $this->assertStringContainsString($product->name, $response->json('html'));
+        $this->assertSame(4, $cart->snapshot()->count());
+    }
+
+    public function test_cart_item_can_be_removed_via_json(): void
+    {
+        $this->seed();
+
+        $product = Product::query()->where('slug', 'ember-reed-diffuser')->firstOrFail();
+
+        $cart = $this->app->make(CartStore::class);
+        $cart->add($product, 2);
+
+        $response = $this->deleteJson(route('cart.destroy', $product));
+
+        $response->assertOk()
+            ->assertJson([
+                'count' => 0,
+                'message' => "Đã xóa {$product->name} khỏi giỏ hàng.",
+            ]);
+
+        $this->assertSame(0, $cart->snapshot()->count());
+        $this->assertStringContainsString('Giỏ hàng vẫn còn trống', $response->json('html'));
+    }
+
     public function test_cart_page_renders_line_items(): void
     {
         $this->seed();
