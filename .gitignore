@@ -24,3 +24,7 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 *.ps1
+
+# AI tooling / agent context
+.impeccable/
+CONTEXT.md
